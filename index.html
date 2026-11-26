@@ -23,7 +23,27 @@
 </main>
 <footer><div class="wrap footer"><b>вільневікно.</b><span>Прототип сервісу · Україна · 2026</span><span>Демо не приймає реальні бронювання</span></div></footer>
 <div class="modal" id="requestModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle"><div class="modalbox"><div class="modalhead"><h3 id="modalTitle">Запит на запис</h3><button class="close" id="closeModal" type="button" aria-label="Закрити">×</button></div><p class="muted" id="modalInfo"></p><form id="requestForm"><div class="field"><label for="clientName">Як до тебе звертатися (можна псевдонім)</label><input id="clientName" maxlength="40" required placeholder="Твоє ім’я або псевдонім"></div><div class="field" style="margin-top:12px"><label for="clientNote">Коментар — необов’язково</label><textarea id="clientNote" maxlength="250" placeholder="Додаткова інформація"></textarea></div><button class="btn" type="submit">Зберегти демо-заявку</button><div class="success" id="requestSuccess" role="status"></div></form><p class="muted">Не вводь номер телефону, адресу, паролі чи інші приватні дані. Заявка зберігається лише на цьому пристрої — майстер її не отримує.</p></div></div>
-<script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+ <script>
+const supabaseClient = window.supabase.createClient(
+    "https://icubpjwedbraxkyshnkk.supabase.co",
+  "sb_publishable_aji7lqZqMW4jOg4pH9rDbQ_wVxAH9py"
+);
+   
+async function testSupabaseConnection() {
+  const { data, error } = await supabaseClient
+    .from('master_profiles')
+    .select('id')
+    .limit(1);
+
+  if (error) {
+    console.error('Помилка Supabase:', error.message);
+  } else {
+    console.log('Supabase підключено!');
+  }
+}
+
+testSupabaseConnection();
 const $=id=>document.getElementById(id);const read=k=>{try{return JSON.parse(localStorage.getItem(k)||'[]')}catch{return []}};const write=(k,v)=>localStorage.setItem(k,JSON.stringify(v));let selectedSlot=null;
 const todayISO=()=>{const d=new Date();return new Date(d.getTime()-d.getTimezoneOffset()*60000).toISOString().slice(0,10)};
 const plusDays=n=>{const d=new Date();d.setDate(d.getDate()+n);return new Date(d.getTime()-d.getTimezoneOffset()*60000).toISOString().slice(0,10)};
